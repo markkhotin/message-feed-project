@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const MessageModel = require('./server/models/message');
 
 const app = express();
 
@@ -15,6 +16,12 @@ db.once("open", () => {
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
+
+app.post("/insert", (req, res) => {
+  const { email, text } = req.body;
+  const message = new MessageModel({ email, text });
+  message.save();
+});
 
 // An api endpoint that returns a short list of items
 app.get("/api/getList", (req, res) => {
