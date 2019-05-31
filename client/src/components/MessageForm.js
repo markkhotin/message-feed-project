@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik } from "formik";
+import { Input, TextArea, Form, Button } from "semantic-ui-react";
 
 const messageFormValidation = Yup.object().shape({
   email: Yup.string()
@@ -31,29 +32,26 @@ const MessageForm = () => (
       isSubmitting
     }) => (
       <StyledForm onSubmit={handleSubmit}>
-        <Field
+        <Input
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="Email"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
         />
-        {touched.email && errors.email}
-        <Field
-          component="textarea"
+        {/*{touched.email && errors.email}*/}
+        <StyledTextArea
           placeholder="message"
           name="text"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
-          cols={30}
-          rows={10}
         />
-        {touched.text && errors.text}
-        <button type="submit" disabled={isSubmitting}>
+
+        <StyledButton primary type="submit" disabled={isSubmitting}>
           Submit
-        </button>
+        </StyledButton>
       </StyledForm>
     )}
   </Formik>
@@ -64,6 +62,18 @@ const StyledForm = styled(Form)`
   flex-direction: column;
   padding: 20px;
   background-color: #efefef;
+  
+  button, textarea {
+    margin-top: 10px !important;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  align-self: flex-end;
+`;
+
+const StyledTextArea = styled(TextArea)`
+  resize: none !important;
 `;
 
 export default MessageForm;
