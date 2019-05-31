@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use(bodyParser.json());
 
 app.post("/api/submitMessage", async (req, res) => {
-  console.log("req:", req);
   try {
     const { email, text } = req.body;
     const message = new MessageModel({ email, text });
