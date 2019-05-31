@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+import { connect } from "react-redux";
 
 import { Formik } from "formik";
 import { Input, TextArea, Form, Button } from "semantic-ui-react";
+
+import * as messageActions from "actions/messages.actions";
 
 const messageFormValidation = Yup.object().shape({
   email: Yup.string()
@@ -12,58 +15,67 @@ const messageFormValidation = Yup.object().shape({
   text: Yup.string().required("Message is required")
 });
 
-const MessageForm = () => (
-  <Formik
-    validationSchema={messageFormValidation}
-    enableReinitialize
-    validateOnBlur={false}
-    validateOnChange={false}
-    initialValues={{
-      email: '',
-      text: ''
-    }}
-    onSubmit={(values, props) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        props.setSubmitting(false);
-      }, 400);
-    }}
-  >
-    {({
-      values,
-      errors,
-      touched,
-      handleChange,
-      handleSubmit,
-      isSubmitting
-    }) => {
-      return (
-        <StyledForm onSubmit={handleSubmit}>
-          <Input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            value={values.email}
-          />
-          {errors.email && <Error>{errors.email}</Error>}
+const initialValues = {
+  email: "",
+  text: ""
+};
 
-          <StyledTextArea
-            placeholder="message"
-            name="text"
-            onChange={handleChange}
-            value={values.password}
-          />
-          {errors.text && <Error>{errors.text}</Error>}
+class MessageForm extends React.Component {
+  handleSubmitForm = (values, props) => {
+    const { submitMessage } = this.props;
 
-          <StyledButton primary type="submit" loading={isSubmitting}>
-            Submit
-          </StyledButton>
-        </StyledForm>
-      );
-    }}
-  </Formik>
-);
+    submitMessage(values);
+    props.setSubmitting(false);
+    props.resetForm(initialValues);
+  };
+
+  render() {
+    return (
+      <Formik
+        validationSchema={messageFormValidation}
+        enableReinitialize
+        validateOnBlur={false}
+        validateOnChange={false}
+        initialValues={initialValues}
+        onSubmit={this.handleSubmitForm}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          isSubmitting
+        }) => {
+          return (
+            <StyledForm onSubmit={handleSubmit}>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={values.email}
+              />
+              {errors.email && <Error>{errors.email}</Error>}
+
+              <StyledTextArea
+                placeholder="message"
+                name="text"
+                onChange={handleChange}
+                value={values.text}
+              />
+              {errors.text && <Error>{errors.text}</Error>}
+
+              <StyledButton primary type="submit" loading={isSubmitting}>
+                Submit
+              </StyledButton>
+            </StyledForm>
+          );
+        }}
+      </Formik>
+    );
+  }
+}
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -89,4 +101,11 @@ const Error = styled.div`
   color: red;
 `;
 
-export default MessageForm;
+const mapStateToProps = state => ({});
+
+export default connect(
+  null,
+  {
+    submitMessage: messageActions.submitMessage
+  }
+)(MessageForm);

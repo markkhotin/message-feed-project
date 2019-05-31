@@ -1,11 +1,12 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require('body-parser')
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const MessageModel = require('./server/models/message');
+const MessageModel = require("./server/models/message");
 
 const port = process.env.PORT || 5000;
-const mongoURI = `${process.env.MONGODB_URI || 'mongodb://localhost:27017'}/message_feed_db`;
+const mongoURI = `${process.env.MONGODB_URI ||
+  "mongodb://localhost:27017"}/message_feed_db`;
 
 const app = express();
 
@@ -22,18 +23,20 @@ app.use(express.static(path.join(__dirname, "client/build")));
 // parse application/json
 app.use(bodyParser.json());
 
-app.post("/api/insertMessage", async (req, res) => {
+app.post("/api/submitMessage", async (req, res) => {
+  console.log("req:", req);
   try {
     const { email, text } = req.body;
     const message = new MessageModel({ email, text });
     await message.save();
 
     res.status(200).json({
-      text: 'Successfully created new message',
+      text: "Successfully created new message",
       createdMessage: message
-    })
+    });
   } catch (e) {
-    console.log('Error while creating new message:', e);
+    console.log("Error while creating new message:", e);
+    res.status(400).json(e);
   }
 });
 
@@ -43,7 +46,8 @@ app.get("/api/getMessages", async (req, res) => {
     const messages = await MessageModel.find({});
     res.json(messages);
   } catch (e) {
-    console.log('Error while getting messages:', e);
+    console.log("Error while getting messages:", e);
+    res.status(400).json(e);
   }
 });
 

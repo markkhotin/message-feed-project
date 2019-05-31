@@ -1,6 +1,7 @@
-export const START_NETWORK = "[network] Start";
-export const END_NETWORK = "[network] End";
-export const CLEAR_NETWORK = "[network] Clear";
+const label = 'network';
+export const START_NETWORK = `[${label}] Start`;
+export const END_NETWORK = `[${label}] End`;
+export const CLEAR_NETWORK = `[${label}] Clear`;
 
 export const startNetwork = networkLabel => ({
   type: START_NETWORK,

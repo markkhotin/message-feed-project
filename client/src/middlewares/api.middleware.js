@@ -1,6 +1,6 @@
 import { get, castArray, compact } from "lodash/fp";
+import request from "utils/api.utils";
 
-import apiUtils from "utils/api.utils";
 import { startNetwork, endNetwork } from "actions/network.actions";
 
 const apiMiddleware = ({ dispatch, getState }) => {
@@ -18,14 +18,11 @@ const apiMiddleware = ({ dispatch, getState }) => {
     const headers = {};
 
     next(action);
-
     dispatch(startNetwork(networkLabel));
-
-    apiUtils
-      .request({ method, url: path, data, headers })
-      .then(({ body }) => {
+    request({ method, url: path, data, headers })
+      .then(({ data }) => {
         if (onSuccess) {
-          dispatchActions(onSuccess(body));
+          dispatchActions(onSuccess(data));
         }
 
         dispatch(endNetwork(networkLabel));

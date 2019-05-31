@@ -1,23 +1,14 @@
-import superagent from "superagent";
+import axios from "axios";
 
-const apiUtils = {
-  request({ method, url, data = null, headers = {} }) {
-    const request = superagent(method, url)
-      .set("Accept", "application/json")
-      .withCredentials();
+const request = ({ method = "GET", url, data = null, headers = {} }) => {
+  const request = axios({
+    url,
+    method,
+    data,
+    headers
+  });
 
-    if (data) {
-      if (method.toUpperCase() === "GET") {
-        request.query(data);
-      } else {
-        request.send(data).set("Content-type", "application/json");
-      }
-    }
-
-    request.set(headers);
-
-    return request.then(data => data); // force request to be sent
-  }
+  return request.then(data => data);
 };
 
-export default apiUtils;
+export default request;
