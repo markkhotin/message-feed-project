@@ -5,8 +5,10 @@ const mongoose = require("mongoose");
 const MessageModel = require("./server/models/message");
 
 const port = process.env.PORT || 5000;
-const mongoURI = `${process.env.MONGODB_URI ||
-  "mongodb://localhost:27017"}/message_feed_db`;
+
+const mongoURI = process.env.MONGODB_URI
+  ? `${process.env.MONGODB_URI}/heroku_mgf1zfvg`
+  : "mongodb://localhost:27017/message_feed_db";
 
 const app = express();
 
