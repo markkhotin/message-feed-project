@@ -43,6 +43,7 @@ app.post("/api/submitMessage", async (req, res) => {
 
 // An api endpoint that returns a short list of items
 app.get("/api/getMessages", async (req, res) => {
+  console.log('!!!lol1111');
   try {
     const messages = await MessageModel.find({});
     res.json(messages);
@@ -54,6 +55,7 @@ app.get("/api/getMessages", async (req, res) => {
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
+  console.log('!!!lol');
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
