@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+
 import { Formik } from "formik";
 import { Input, TextArea, Form, Button } from "semantic-ui-react";
 
@@ -15,10 +16,16 @@ const MessageForm = () => (
   <Formik
     validationSchema={messageFormValidation}
     enableReinitialize
-    onSubmit={(values, { setSubmitting }) => {
+    validateOnBlur={false}
+    validateOnChange={false}
+    initialValues={{
+      email: '',
+      text: ''
+    }}
+    onSubmit={(values, props) => {
       setTimeout(() => {
         alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
+        props.setSubmitting(false);
       }, 400);
     }}
   >
@@ -27,33 +34,34 @@ const MessageForm = () => (
       errors,
       touched,
       handleChange,
-      handleBlur,
       handleSubmit,
       isSubmitting
-    }) => (
-      <StyledForm onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.email}
-        />
-        {/*{touched.email && errors.email}*/}
-        <StyledTextArea
-          placeholder="message"
-          name="text"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password}
-        />
+    }) => {
+      return (
+        <StyledForm onSubmit={handleSubmit}>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            value={values.email}
+          />
+          {errors.email && <Error>{errors.email}</Error>}
 
-        <StyledButton primary type="submit" disabled={isSubmitting}>
-          Submit
-        </StyledButton>
-      </StyledForm>
-    )}
+          <StyledTextArea
+            placeholder="message"
+            name="text"
+            onChange={handleChange}
+            value={values.password}
+          />
+          {errors.text && <Error>{errors.text}</Error>}
+
+          <StyledButton primary type="submit" loading={isSubmitting}>
+            Submit
+          </StyledButton>
+        </StyledForm>
+      );
+    }}
   </Formik>
 );
 
@@ -62,8 +70,9 @@ const StyledForm = styled(Form)`
   flex-direction: column;
   padding: 20px;
   background-color: #efefef;
-  
-  button, textarea {
+
+  button,
+  textarea {
     margin-top: 10px !important;
   }
 `;
@@ -74,6 +83,10 @@ const StyledButton = styled(Button)`
 
 const StyledTextArea = styled(TextArea)`
   resize: none !important;
+`;
+
+const Error = styled.div`
+  color: red;
 `;
 
 export default MessageForm;
