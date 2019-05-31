@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import MessageForm from "components/MessageForm";
+
 const Main = () => (
   <Container>
-    <Form/>
+    <MessageForm/>
     <Feed/>
   </Container>
 );
 
 const Container = styled.div`
   margin: 5% 30%;
-`;
-
-const Form = styled.div`
-  background-color: #efefef;
-  height: 200px;
 `;
 
 const Feed = styled.div`
