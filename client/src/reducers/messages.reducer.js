@@ -9,8 +9,10 @@ const messagesReducer = handleActions(
   {
     [AT.SET_MESSAGE]: (state, { payload }) => [
       ...state,
-      get("data.createdMessage", payload)
-    ]
+      get("message", payload)
+    ],
+    [AT.SET_MESSAGES]: (state, { payload }) =>
+      get("messages", payload)
   },
   initialState
 );

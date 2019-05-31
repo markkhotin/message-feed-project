@@ -31,10 +31,7 @@ app.post("/api/submitMessage", async (req, res) => {
     const message = new MessageModel({ email, text });
     await message.save();
 
-    res.status(200).json({
-      text: "Successfully created new message",
-      createdMessage: message
-    });
+    res.status(200).json(message);
   } catch (e) {
     console.log("Error while creating new message:", e);
     res.status(400).json(e);
@@ -43,13 +40,11 @@ app.post("/api/submitMessage", async (req, res) => {
 
 // Main route
 app.get("/", (req, res) => {
-  console.log("!!!lol2222");
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
 // An api endpoint that returns a short list of items
 app.get("/api/getMessages", async (req, res) => {
-  console.log("!!!lol1111");
   try {
     const messages = await MessageModel.find({});
     res.json(messages);
@@ -61,7 +56,6 @@ app.get("/api/getMessages", async (req, res) => {
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
-  console.log("!!!lol");
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
