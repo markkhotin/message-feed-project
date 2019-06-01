@@ -35,5 +35,5 @@ Made use of additional libraries:
 Things to improve:
  - Create websocket to fetch other users' messages without refreshing the page or submitting own message
  
- Application hosted on: https://message-feed-project.herokuapp.com/
- LinkedIn Profile: https://www.linkedin.com/in/mark-khotin-231a26b9/
+- Application hosted on: https://message-feed-project.herokuapp.com/
+- LinkedIn Profile: https://www.linkedin.com/in/mark-khotin-231a26b9/
