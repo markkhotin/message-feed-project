@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { connect } from "react-redux";
-
+import { toLower } from 'lodash/fp';
 import { Formik } from "formik";
+
 import { Input, TextArea, Form, Button } from "semantic-ui-react";
 
 import * as mainActions from "actions/main.actions";
@@ -12,7 +13,7 @@ const messageFormValidation = Yup.object().shape({
   email: Yup.string()
     .email("Email not valid")
     .required("Email is required"),
-  text: Yup.string().required("Message is required")
+  text: Yup.string().trim().required("Message is required")
 });
 
 const initialValues = {
@@ -23,8 +24,13 @@ const initialValues = {
 class MessageForm extends React.Component {
   handleSubmitForm = (values, props) => {
     const { submitMessage } = this.props;
+    const { email, text } = values;
 
-    submitMessage(values);
+    if (!email || !text) {
+      return;
+    }
+
+    submitMessage({ email: toLower(email), text });
     props.setSubmitting(false);
     props.resetForm(initialValues);
   };

@@ -14,6 +14,11 @@ const messagesSelector = createSelector(
   mainData => mainData.messages
 );
 
+export const errorSelector = createSelector(
+  [mainSelector],
+  mainData => mainData.error
+);
+
 export const filteredMessagesSelector = createSelector(
   [messagesSelector, filterTermSelector],
   (messages, filterTerm) => {

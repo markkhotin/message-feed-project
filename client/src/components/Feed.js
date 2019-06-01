@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { trimStart } from 'lodash/fp';
 
 import * as mainActions from "actions/main.actions";
 import {
@@ -18,15 +19,22 @@ class Feed extends React.Component {
     this.props.fetchMessages();
   }
 
+  handleFilterChange = e => {
+    const { setFilterTerm } = this.props;
+    const filter = trimStart(e.target.value);
+
+    setFilterTerm(filter);
+  };
+
   render() {
-    const { isLoading, messages, filterTerm, setFilterTerm } = this.props;
+    const { isLoading, messages, filterTerm } = this.props;
 
     return (
       <Container>
         <Input
           placeholder="Filter"
           value={filterTerm}
-          onChange={e => setFilterTerm(e.target.value)}
+          onChange={this.handleFilterChange}
         />
 
         {isLoading ? (

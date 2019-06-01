@@ -58,6 +58,8 @@ const Date = styled.div`
   color: #b2b2b2;
   font-size: 12px;
 `;
-const Text = styled.div``;
+const Text = styled.div`
+  word-break: break-word;
+`;
 
 export default Message;

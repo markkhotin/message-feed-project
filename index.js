@@ -43,7 +43,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-// An api endpoint that returns a short list of items
 app.get("/api/getMessages", async (req, res) => {
   try {
     const messages = await MessageModel.find({});
