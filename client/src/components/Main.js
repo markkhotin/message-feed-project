@@ -12,7 +12,8 @@ const Main = () => (
 );
 
 const Container = styled.div`
-  margin: 5% 30%;
+  width: 450px;
+  margin: 3% auto;
 `;
 
 
