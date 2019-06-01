@@ -11,10 +11,6 @@ const initialState = {
 
 const mainReducer = handleActions(
   {
-    [AT.SET_MESSAGE]: (state, { payload }) => ({
-      ...state,
-      messages: [...state.messages, get("message", payload)]
-    }),
     [AT.SET_MESSAGES]: (state, { payload }) => ({
       ...state,
       messages: get("messages", payload)

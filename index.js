@@ -31,7 +31,8 @@ app.post("/api/submitMessage", async (req, res) => {
     const message = new MessageModel({ email, text });
     await message.save();
 
-    res.status(200).json(message);
+    const messages = await MessageModel.find({});
+    res.status(200).json(messages);
   } catch (e) {
     console.log("Error while creating new message:", e);
     res.status(400).json(e);

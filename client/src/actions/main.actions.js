@@ -1,16 +1,10 @@
 const label = "main";
 export const SUBMIT_MESSAGE = `[${label}] Submit message`;
-export const SET_MESSAGE = `[${label}] Set message`;
 export const FETCH_MESSAGES = `[${label}] Fetch messages`;
 export const SET_MESSAGES = `[${label}] Set messages`;
 export const SET_FILTER_TERM = `[${label}] Set filter term`;
 export const SET_ERROR = `[${label}] Set error`;
 export const CLEAR_ERROR = `[${label}] Clear error`;
-
-const setMessage = message => ({
-  type: SET_MESSAGE,
-  payload: { message }
-});
 
 export const submitMessage = message => ({
   type: SUBMIT_MESSAGE,
@@ -19,7 +13,7 @@ export const submitMessage = message => ({
     networkLabel: label,
     method: "POST",
     path: `api/submitMessage`,
-    onSuccess: setMessage,
+    onSuccess: setMessages,
     onError: setError
   },
   meta: {
