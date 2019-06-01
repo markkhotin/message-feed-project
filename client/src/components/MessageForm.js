@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Formik } from "formik";
 import { Input, TextArea, Form, Button } from "semantic-ui-react";
 
-import * as messageActions from "actions/messages.actions";
+import * as mainActions from "actions/main.actions";
 
 const messageFormValidation = Yup.object().shape({
   email: Yup.string()
@@ -101,11 +101,9 @@ const Error = styled.div`
   color: red;
 `;
 
-const mapStateToProps = state => ({});
-
 export default connect(
   null,
   {
-    submitMessage: messageActions.submitMessage
+    submitMessage: mainActions.submitMessage
   }
 )(MessageForm);

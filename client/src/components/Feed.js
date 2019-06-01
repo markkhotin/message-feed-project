@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import * as messageActions from "actions/messages.actions";
-import { messagesSelector } from "selectors/messages.selectors";
+import * as mainActions from "actions/main.actions";
+import {
+  filteredMessagesSelector,
+  filterTermSelector
+} from "selectors/main.selectors";
 
 import { Loader, Input } from "semantic-ui-react";
 import { isLoadingSelector } from "selectors/network.selectors";
@@ -16,11 +19,15 @@ class Feed extends React.Component {
   }
 
   render() {
-    const { isLoading, messages } = this.props;
+    const { isLoading, messages, filterTerm, setFilterTerm } = this.props;
 
     return (
       <Container>
-        <Input placeholder="Filter" />
+        <Input
+          placeholder="Filter"
+          value={filterTerm}
+          onChange={e => setFilterTerm(e.target.value)}
+        />
 
         {isLoading ? (
           <Loader active inline="centered" />
@@ -51,13 +58,15 @@ const Container = styled.div`
 `;
 
 const mapStateToProps = state => ({
-  messages: messagesSelector(state),
-  isLoading: isLoadingSelector(state, messageActions.FETCH_MESSAGES)
+  messages: filteredMessagesSelector(state),
+  isLoading: isLoadingSelector(state, mainActions.FETCH_MESSAGES),
+  filterTerm: filterTermSelector(state)
 });
 
 export default connect(
   mapStateToProps,
   {
-    fetchMessages: messageActions.fetchMessages
+    fetchMessages: mainActions.fetchMessages,
+    setFilterTerm: mainActions.setFilterTerm
   }
 )(Feed);

@@ -3,6 +3,7 @@ export const SUBMIT_MESSAGE = `[${label}] Submit message`;
 export const SET_MESSAGE = `[${label}] Set message`;
 export const FETCH_MESSAGES = `[${label}] Fetch messages`;
 export const SET_MESSAGES = `[${label}] Set messages`;
+export const SET_FILTER_TERM = `[${label}] Set filter term`;
 
 const setMessage = message => ({
   type: SET_MESSAGE,
@@ -39,4 +40,9 @@ export const fetchMessages = () => ({
 const setMessages = messages => ({
   type: SET_MESSAGES,
   payload: { messages }
+});
+
+export const setFilterTerm = filterTerm => ({
+  type: SET_FILTER_TERM,
+  payload: { filterTerm }
 });

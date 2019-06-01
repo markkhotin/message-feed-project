@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
 import network from "reducers/network.reducer";
-import messages from "reducers/messages.reducer";
+import main from "reducers/main.reducer";
 
 export const reducersMap = {
   network,
-  messages
+  main
 };
 
 export default combineReducers(reducersMap);
